@@ -11,7 +11,7 @@ Hardware Specifications:
 - ESPRESSIF-ESP32-DOWDQ6 240MHz Xtensa® single-/dual-core 32-bit LX6 microprocessor
 - FLASH: QSPI flash/SRAM, up to 4 x 16 MB
 - 520 kB SRAM + 8MBytes External SPRAM
-- dispaly: IPS Panel ST7789/1.3 Inch
+- display: IPS Panel ST7789/1.3 Inch
 - USB to TTL: CP2104
 - Camera: OV2640 2Megapixel
 - Mic: MSM261S4030H0
