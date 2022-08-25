@@ -117,7 +117,14 @@ void st7789_init(void)
         cmd++;
     }
 
+    st7789_enable_backlight(true);
+
     st7789_set_orientation(CONFIG_LV_DISPLAY_ORIENTATION);
+}
+
+void st7789_enable_backlight(bool backlight)
+{
+    gpio_set_level(ST7789_BCKL, backlight ? 1 : 0);
 }
 
 /* The ST7789 display controller can drive up to 320*240 displays, when using a 240*240 or 240*135

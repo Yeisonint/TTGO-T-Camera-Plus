@@ -12,6 +12,9 @@ extern "C"
 {
 #endif
 
+#define  LV_HOR_RES_MAX 240
+#define  LV_VER_RES_MAX 240
+
 #include "lvgl.h"
 //#include "lvgl/lvgl.h"
 
@@ -19,11 +22,12 @@ extern "C"
 
 #define ST7789_DC       15
 #define ST7789_RST      33
+#define ST7789_BCKL     2
 
-//#define ST7789_SOFT_RST
+#define ST7789_SOFT_RST
 
 
-#define ST7789_INVERT_COLORS            CONFIG_LV_INVERT_COLORS
+#define ST7789_INVERT_COLORS CONFIG_LV_INVERT_COLORS
 
 /* ST7789 commands */
 #define ST7789_NOP      0x00
@@ -102,7 +106,7 @@ extern "C"
 
 void st7789_init(void);
 void st7789_flush(lv_disp_drv_t *drv, const lv_area_t *area, lv_color_t *color_map);
-
+void st7789_enable_backlight(bool backlight);
 void st7789_send_cmd(uint8_t cmd);
 void st7789_send_data(void *data, uint16_t length);
 
