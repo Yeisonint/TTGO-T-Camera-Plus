@@ -30,10 +30,6 @@
 
 #include "lvgl_helpers.h"
 
-/*********************
- *      DEFINES
- *********************/
-#define LV_TICK_PERIOD_MS 1
 
 /**********************
  *  STATIC PROTOTYPES

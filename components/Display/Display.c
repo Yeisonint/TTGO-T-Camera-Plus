@@ -1,5 +1,11 @@
 #include "Display.h"
 
+/*********************
+ *      DEFINES
+ *********************/
+#define LV_TICK_PERIOD_MS 1
+
+
 static const char *TAG = "Display";
 
 void guiTask(void *pvParameter) {
@@ -10,7 +16,7 @@ void guiTask(void *pvParameter) {
     lv_init();
 
     /* Initialize SPI or I2C bus used by the drivers */
-    lvgl_driver_init();
+    //lvgl_driver_init();
 
     lv_color_t* buf1 = heap_caps_malloc(DISP_BUF_SIZE * sizeof(lv_color_t), MALLOC_CAP_DMA);
     assert(buf1 != NULL);
