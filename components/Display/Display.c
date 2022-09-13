@@ -1,45 +1,21 @@
-#include <stdio.h>
 #include "Display.h"
 
-#define LV_TICK_PERIOD_MS 1
-#define TAG "Display"
-
-void lv_example(void) {
-	xTaskCreatePinnedToCore(guiTask, "gui", 4096*2, NULL, 0, NULL, 1);
-}
-
-
-void init_Display(void){
-
-	ESP_LOGI(TAG, "Display hor size: %d, ver size: %d", LV_HOR_RES_MAX, LV_VER_RES_MAX);
-	ESP_LOGI(TAG, "Display buffer size: %d", DISP_BUF_SIZE);
-
-	ESP_LOGI(TAG, "Initializing SPI master for display");
-
-	    lvgl_spi_driver_init(TFT_SPI_HOST,
-	        DISP_SPI_MISO, DISP_SPI_MOSI, DISP_SPI_CLK,
-	        SPI_BUS_MAX_TRANSFER_SZ, 1,
-	        DISP_SPI_IO2, DISP_SPI_IO3);
-
-	    disp_spi_add_device(TFT_SPI_HOST);
-	st7789_init();
-	//st7789_flush(drv, area, color_map);
-}
-
+static const char *TAG = "Display";
 
 void guiTask(void *pvParameter) {
-
     (void) pvParameter;
     xGuiSemaphore = xSemaphoreCreateMutex();
 
+    ESP_LOGI(TAG, "Init Display\n");
     lv_init();
 
     /* Initialize SPI or I2C bus used by the drivers */
-    init_Display();
+    lvgl_driver_init();
 
     lv_color_t* buf1 = heap_caps_malloc(DISP_BUF_SIZE * sizeof(lv_color_t), MALLOC_CAP_DMA);
     assert(buf1 != NULL);
 
+    /* Use double buffered when not working with monochrome displays */
     lv_color_t* buf2 = heap_caps_malloc(DISP_BUF_SIZE * sizeof(lv_color_t), MALLOC_CAP_DMA);
     assert(buf2 != NULL);
 
@@ -53,8 +29,7 @@ void guiTask(void *pvParameter) {
 
     lv_disp_drv_t disp_drv;
     lv_disp_drv_init(&disp_drv);
-    disp_drv.flush_cb = st7789_flush;
-
+    disp_drv.flush_cb = disp_driver_flush;
     disp_drv.buffer = &disp_buf;
     lv_disp_drv_register(&disp_drv);
 
@@ -66,6 +41,8 @@ void guiTask(void *pvParameter) {
     esp_timer_handle_t periodic_timer;
     ESP_ERROR_CHECK(esp_timer_create(&periodic_timer_args, &periodic_timer));
     ESP_ERROR_CHECK(esp_timer_start_periodic(periodic_timer, LV_TICK_PERIOD_MS * 1000));
+
+    ESP_LOGI(TAG, "Finish init\n");
 
     /* Create the demo application */
     create_demo_application();
@@ -89,8 +66,7 @@ void guiTask(void *pvParameter) {
 
 void create_demo_application(void)
 {
-	printf("Call lv_init...\n");
-
+	ESP_LOGI(TAG, "Create GUI App\n");
     /* use a pretty small demo for monochrome displays */
     /* Get the current screen  */
     lv_obj_t * scr = lv_disp_get_scr_act(NULL);
@@ -105,13 +81,9 @@ void create_demo_application(void)
      * NULL means align on parent (which is the screen now)
      * 0, 0 at the end means an x, y offset after alignment*/
     lv_obj_align(label1, NULL, LV_ALIGN_CENTER, 0, 0);
-
-	printf("Exit with success!\n");
 }
 
 void lv_tick_task(void *arg) {
     (void) arg;
-
     lv_tick_inc(LV_TICK_PERIOD_MS);
 }
-

@@ -12,7 +12,7 @@ void app_main(void)
     printf("Hello from app_main!\n");
     ESP_LOGI(TAG, "Hello from app_main!\n");
 
-    lv_example();
+    xTaskCreatePinnedToCore(guiTask, "gui", 4096*2, NULL, 0, NULL, 1);
 
     while (true) {
     	//testSDCard();
@@ -20,3 +20,4 @@ void app_main(void)
         sleep(5);
     }
 }
+

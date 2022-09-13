@@ -1,4 +1,4 @@
-idf_component_register(SRCS "Display.c" "st7789.c" "disp_spi.c"
+idf_component_register(SRCS "Display.c"
                     INCLUDE_DIRS "include"
-                    REQUIRES lvgl)
+                    REQUIRES lvgl lvgl_esp32_drivers)
 
