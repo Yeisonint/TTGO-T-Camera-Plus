@@ -7,6 +7,7 @@
 
 
 static const char *TAG = "Display";
+LV_IMG_DECLARE(png_decoder_test);
 
 void guiTask(void *pvParameter) {
     (void) pvParameter;
@@ -88,6 +89,39 @@ void create_demo_application(void)
      * 0, 0 at the end means an x, y offset after alignment*/
     lv_obj_align(label1, NULL, LV_ALIGN_CENTER, 0, 0);
 }
+
+void text1(void){
+	lv_obj_clean(lv_scr_act());
+	ESP_LOGI(TAG, "Create GUI App\n");
+    /* use a pretty small demo for monochrome displays */
+    /* Get the current screen  */
+    lv_obj_t * scr = lv_disp_get_scr_act(NULL);
+
+    /*Create a Label on the currently active screen*/
+    lv_obj_t * label1 =  lv_label_create(scr, NULL);
+
+    /*Modify the Label's text*/
+    lv_label_set_text(label1, "Hello\nworld");
+
+    /* Align the Label to the center
+     * NULL means align on parent (which is the screen now)
+     * 0, 0 at the end means an x, y offset after alignment*/
+    lv_obj_align(label1, NULL, LV_ALIGN_CENTER, 0, 0);
+}
+void img(void){
+	lv_obj_clean(lv_scr_act());
+    lv_obj_t * img1 = lv_img_create(lv_scr_act(), NULL);
+    lv_img_set_src(img1, "S:/img1.bin");
+    lv_obj_align(img1, NULL, LV_ALIGN_CENTER, 0, 0);
+}
+
+void img_lib_png(void){
+	lv_obj_clean(lv_scr_act());
+	lv_obj_t *img = lv_img_create(lv_scr_act(), NULL);
+	lv_img_set_src(img, &png_decoder_test);
+	lv_obj_align(img, NULL, LV_ALIGN_CENTER, 0, 0);
+}
+
 
 void lv_tick_task(void *arg) {
     (void) arg;

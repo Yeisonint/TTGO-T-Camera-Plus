@@ -20,6 +20,7 @@
 #include "esp_system.h"
 #include "driver/gpio.h"
 #include "esp_log.h"
+#include "lv_png.h"
 
 /* Littlevgl specific */
 #ifdef LV_LVGL_H_INCLUDE_SIMPLE
@@ -38,12 +39,14 @@ void lv_tick_task(void *arg);
 void guiTask(void *pvParameter);
 void create_demo_application(void);
 
+void text1(void);
+void img(void);
+void img_lib_png(void);
+
 /* Creates a semaphore to handle concurrent call to lvgl stuff
  * If you wish to call *any* lvgl function from other threads/tasks
  * you should lock on the very same semaphore! */
 SemaphoreHandle_t xGuiSemaphore;
-
-void func(void);
 
 
 #endif

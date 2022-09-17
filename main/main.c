@@ -12,8 +12,12 @@ void app_main(void)
     xTaskCreatePinnedToCore(guiTask, "gui", 4096*2, NULL, 0, NULL, 1);
 
     while (true) {
-    	testSDCard();
-    	printf("Wait 5 seconds!\n");
+    	//testSDCard();
+    	printf("Show text!\n");
+    	text1();
+        sleep(5);
+        printf("Show img!\n");
+        img_lib_png();
         sleep(5);
     }
 }

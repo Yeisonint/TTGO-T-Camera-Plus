@@ -28,6 +28,7 @@
 #include "sdmmc_cmd.h"
 #include "board_def.h"
 #include "lvgl_tft/disp_spi.h"
+#include "lv_png.h"
 
 /* Littlevgl specific */
 #ifdef LV_LVGL_H_INCLUDE_SIMPLE

@@ -5,7 +5,7 @@
  *      Author: Yeisonint
  */
 #include "devices.h"
-static const char *TAG = "SDCard";
+static const char *TAG = "Devices";
 
 /*********************
  *      SPI BUS
@@ -54,7 +54,6 @@ spi_device_interface_config_t devcfg={
     .post_cb=NULL
 };
 
-
 esp_err_t initDevices(void) {
 	esp_err_t ret = ESP_FAIL;
 	host.slot = SPI_HOST_DEVICE;
@@ -97,6 +96,8 @@ esp_err_t initDevices(void) {
 	 *********************/
 	disp_spi_add_device(SPI_HOST_DEVICE);
 	disp_driver_init();
+
+	lv_png_init();
 
 	return ESP_OK;
 }
